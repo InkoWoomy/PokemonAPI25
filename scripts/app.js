@@ -3,6 +3,11 @@ const cryAudio = document.getElementById("cryAudio");
 
 //Declarations
 let pkmnData = [];
+let speciesData = [];
+let evolutionData = [];
+let basicPokemon = [];
+let movesData = [];
+
 
 //fetches
 //General Pokemon Data
@@ -45,31 +50,36 @@ async function test()
     console.log("Location Data\n", locationData.length < 1 ? null : locationData);
     
     //Species Data for the Pokemon
-    let speciesData = await getExtraData(pkmnData.species.url);
+    speciesData = await getExtraData(pkmnData.species.url);
     console.log("Species Data\n", speciesData);
 
     //Pokedex Entry 
     console.log("Dex Entry:\n",speciesData.flavor_text_entries[12].flavor_text);
 
-    //Searching for Evo entry
-    let evolutionData = await getExtraData(speciesData.evolution_chain.url);
+    //Searching for Evo Data
+    evolutionData = await getExtraData(speciesData.evolution_chain.url);
     console.log("Evolution Data:\n", evolutionData);
 
     //Data for the first pokemon in the evo line
-    let basicPokemon = await getExtraData(evolutionData.chain.species.url);
+    basicPokemon = await getExtraData(evolutionData.chain.species.url);
     console.log("Basic Pokemon:\n", basicPokemon);
 
     //New Evo Data to get a ladder leading up to and including pokemon in the evo line
     evolutionData = await getExtraData(basicPokemon.evolution_chain.url);
     console.log("Evolution Data:\n", evolutionData);
 
-
+    //Move Data
+    for (let i = 0; i < pkmnData.moves.length; i++)
+    {
+        movesData.push(pkmnData.moves[i].move.name);
+    }
+    console.log("Moves Data:\n", movesData);
 }
 
 test();
 
 //Event listener for pokemon cries (will be assigned to a button soon!)
-addEventListener('click', function()
+addEventListener('', function()
 {
     cryAudio.src = pkmnData.cries.latest;
     

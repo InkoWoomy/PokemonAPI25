@@ -1,7 +1,15 @@
 //Document data
-const cryAudio = document.getElementById("cryAudio");
+const pkmnDataName = document.getElementById("pkmnDataName");
+const pkmnDataDexNo = document.getElementById("pkmnDataDexNo");
+const pkmnDataIcon = document.getElementById("pkmnDataIcon");
+const pkmnDataTypes = document.getElementById("pkmnDataTypes");
+const pkmnDataCry = document.getElementById("pkmnDataCry");
+const cryBtn = document.getElementById("cryBtn");
+const searchBtn = document.getElementById("searchBtn")
+
 
 //Declarations
+let pkmnName = Math.ceil(Math.random() * 649);
 let pkmnData = [];
 let speciesData = [];
 let evolutionData = [];
@@ -11,9 +19,9 @@ let movesData = [];
 
 //fetches
 //General Pokemon Data
-async function getDataGeneral(pkmnName)
+async function getDataGeneral(nameId)
 {
-    const promise = await fetch(`https://pokeapi.co/api/v2/pokemon/${pkmnName}/`);
+    const promise = await fetch(`https://pokeapi.co/api/v2/pokemon/${nameId}/`);
     const data = promise.json();
     return data;
 }
@@ -33,18 +41,44 @@ function capitalize(s)
 }
 
 //Test Data gather
-async function test()
+async function SearchPokemon(pkmnSearch)
 {
     //Basic Pokemon Data
-    pkmnData = await getDataGeneral("Chandelure");
+    pkmnData = await getDataGeneral(pkmnSearch);
     console.log("Pokemon Data:\n", pkmnData);
+
     console.log("Name:", capitalize(pkmnData.name));
+    pkmnDataName.innerText = capitalize(pkmnData.name);
+
     console.log("DexNo.", pkmnData.id);
+    pkmnDataDexNo.innerText = "National Dex No. " + pkmnData.id;
+
     console.log("Height:", (pkmnData.height/10).toFixed(1),"m");
     console.log("Weight:", (pkmnData.weight/10).toFixed(1),"kg");
-    console.log("Type 1:", capitalize(pkmnData.types[0].type.name));
-    console.log("Type 2:", pkmnData.types.length < 2 ? null : capitalize(pkmnData.types[1].type.name));
 
+    // console.log("Type 1:", capitalize(pkmnData.types[0].type.name));
+    // console.log("Type 2:", pkmnData.types.length < 2 ? null : capitalize(pkmnData.types[1].type.name));
+    function TypeList()
+    {
+        
+        pkmnData.types.map(type => {
+            console.log("Type:", type);
+
+            let h1 = document.createElement('h1');
+            h1.className = `col-start-${type.slot} px-2 bg-slate-300 border-4 border-slate-400 rounded-xl`;
+            h1.innerText = type.type.name.toUpperCase();
+            console.log(h1);
+            
+            pkmnDataTypes.appendChild(h1);
+        });
+        
+    }
+
+    TypeList();
+
+    pkmnDataIcon.src = pkmnData.sprites.other["official-artwork"].front_default;
+    pkmnDataIcon.alt = capitalize(pkmnData.name)+"OfficialArtwork";
+    
     //Spawn Data
     locationData = await getExtraData(pkmnData.location_area_encounters);
     console.log("Location Data\n", locationData.length < 1 ? null : locationData);
@@ -54,7 +88,16 @@ async function test()
     console.log("Species Data\n", speciesData);
 
     //Pokedex Entry 
-    console.log("Dex Entry:\n",speciesData.flavor_text_entries[12].flavor_text);
+    for (let i = 0; i < speciesData.flavor_text_entries.length; i++)
+        {
+        //Here we look for the English entry of the pokemon from Pokemon X. We break in order to generate only 1 dex entry.
+        if (speciesData.flavor_text_entries[i].language.name === "en" && speciesData.flavor_text_entries[i].version.name === "x")
+        {
+            console.log("Dex Entry:\n",speciesData.flavor_text_entries[i].flavor_text);
+            break;
+        }
+        
+    }
 
     //Searching for Evo Data
     evolutionData = await getExtraData(speciesData.evolution_chain.url);
@@ -76,19 +119,23 @@ async function test()
     console.log("Moves Data:\n", movesData);
 }
 
-test();
 
-//Event listener for pokemon cries (will be assigned to a button soon!)
-addEventListener('', function()
+SearchPokemon(pkmnName);
+
+//Event listener for searching basaed on input
+searchBtn.addEventListener
+
+//Event listener for pokemon cries
+cryBtn.addEventListener('click', function()
 {
-    cryAudio.src = pkmnData.cries.latest;
+    pkmnDataCry.src = pkmnData.cries.latest;
     
     //#1 3DS Pikachu Cry Hater. Thank goodness they changed it in Legends and Scarlet/Violet.
     if (pkmnData.id == 25)
         {
-            cryAudio.src = pkmnData.cries.legacy;
+            pkmnDataCry.src = pkmnData.cries.legacy;
         } 
         
-    cryAudio.volume = 0.2;
-    cryAudio.play();
+    pkmnDataCry.volume = 0.2;
+    pkmnDataCry.play();
 })

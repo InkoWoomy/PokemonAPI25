@@ -1,0 +1,10 @@
+@font-face {
+    font-family: "PkmnBW";
+    src: url("../assets/font/pokemon-b-w.ttf");
+}
+
+h1, input, button, a
+{
+    font-family: "PkmnBW";
+    font-size: 36px;
+}

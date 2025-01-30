@@ -123,7 +123,11 @@ async function SearchPokemon(pkmnSearch)
 SearchPokemon(pkmnName);
 
 //Event listener for searching basaed on input
-searchBtn.addEventListener
+searchBtn.addEventListener('click', function()
+{
+    //WORKING ON IT!
+    return null;
+})
 
 //Event listener for pokemon cries
 cryBtn.addEventListener('click', function()

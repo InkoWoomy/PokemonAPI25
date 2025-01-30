@@ -8,3 +8,96 @@ h1, input, button, a
     font-family: "PkmnBW";
     font-size: 36px;
 }
+
+/*styles for typing*/
+
+.type-normal
+{
+    background-color: #ffffff;
+}
+
+.type-grass
+{
+    background-color: #32e03b;
+}
+
+.type-fire
+{
+    background-color: #FF0000;
+}
+
+.type-water
+{
+    background-color: #2532ee;
+}
+
+.type-bug
+{
+    background-color: #9fff10;
+}
+
+.type-electric
+{
+    background-color: #ffff5f;
+}
+
+.type-ground
+{
+    background-color: #a15f41;
+}
+
+.type-rock
+{
+    background-color: #daae9a;
+}
+
+.type-fighting
+{
+    background-color: #9c2424;
+}
+
+.type-dark
+{
+    background-color: #000000;
+    color: white;
+}
+
+.type-ghost
+{
+    background-color: #7300FF;
+}
+
+.type-psychic
+{
+    background-color: #ee4c75;
+}
+
+.type-fairy
+{
+    background-color: #ffc0cb;
+}
+
+.type-flying
+{
+    background-color: #bbdcf7;
+}
+
+.type-poison
+{
+    background-color: #7c427c;
+}
+
+.type-steel
+{
+    background-color: #4682b4;
+}
+
+.type-ice
+{
+    background-color: #68b5f3;
+}
+
+.type-dragon
+{
+    background-color: #7a6d1f;
+}

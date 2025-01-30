@@ -2,11 +2,23 @@
 const pkmnDataName = document.getElementById("pkmnDataName");
 const pkmnDataDexNo = document.getElementById("pkmnDataDexNo");
 const pkmnDataIcon = document.getElementById("pkmnDataIcon");
+const pkmnDataAnimatedIcon = document.getElementById("pkmnDataAnimatedIcon");
 const pkmnDataTypes = document.getElementById("pkmnDataTypes");
 const pkmnDataCry = document.getElementById("pkmnDataCry");
+const pkmnDataGeneral = document.getElementById("pkmnDataGeneral");
+const pkmnDataEvolution = document.getElementById("pkmnDataEvolution");
+const pkmnDataGame = document.getElementById("pkmnDataGame");
+const pkmnSpecies = document.getElementById("pkmnSpecies");
+const pkmnHeight = document.getElementById("pkmnHeight");
+const pkmnWeight = document.getElementById("pkmnWeight");
+const pkmnDexEntry = document.getElementById("pkmnDexEntry");
 const cryBtn = document.getElementById("cryBtn");
-const searchBtn = document.getElementById("searchBtn")
-
+const shinyBtn = document.getElementById("shinyBtn");
+const searchBtn = document.getElementById("searchBtn");
+const searchText = document.getElementById("searchText");
+const btnGeneral = document.getElementById("btnGeneral");
+const btnEvolution = document.getElementById("btnEvolution");
+const btnGameData = document.getElementById("btnGameData");
 
 //Declarations
 let pkmnName = Math.ceil(Math.random() * 649);
@@ -15,6 +27,7 @@ let speciesData = [];
 let evolutionData = [];
 let basicPokemon = [];
 let movesData = [];
+let shinyToggle = false;
 
 
 //fetches
@@ -48,36 +61,47 @@ async function SearchPokemon(pkmnSearch)
     console.log("Pokemon Data:\n", pkmnData);
 
     console.log("Name:", capitalize(pkmnData.name));
-    pkmnDataName.innerText = capitalize(pkmnData.name);
+    let pkmnNameReturn = "";
+    for (let i = 0; i < pkmnData.name.length; i++)
+    {
+        if (pkmnData.name[i] == "-")
+        {
+            break;
+        }
+        pkmnNameReturn += pkmnData.name[i]
+    }
+    pkmnDataName.innerText = capitalize(pkmnNameReturn);
 
     console.log("DexNo.", pkmnData.id);
     pkmnDataDexNo.innerText = "National Dex No. " + pkmnData.id;
 
     console.log("Height:", (pkmnData.height/10).toFixed(1),"m");
+    pkmnHeight.innerText = "Height: "+ (pkmnData.height/10).toFixed(1)+" m";
     console.log("Weight:", (pkmnData.weight/10).toFixed(1),"kg");
+    pkmnWeight.innerText = "Weight: "+ (pkmnData.weight/10).toFixed(1)+" kg";
 
-    // console.log("Type 1:", capitalize(pkmnData.types[0].type.name));
-    // console.log("Type 2:", pkmnData.types.length < 2 ? null : capitalize(pkmnData.types[1].type.name));
-    function TypeList()
-    {
+    pkmnDataTypes.innerHTML = "";
+    pkmnData.types.map(type => {
+        console.log("Type:", type);
+
+        let h1 = document.createElement('h1');
+        h1.className = `col-start-${type.slot} border-opacity-50 px-2 bg-slate-300 border-4 border-slate-400 rounded-xl type-${type.type.name}`;
+        if (pkmnData.types.length == 1)
+        {
+            h1.className += ` col-span-2`;
+        }
+        h1.innerText = type.type.name.toUpperCase();
         
-        pkmnData.types.map(type => {
-            console.log("Type:", type);
+        pkmnDataTypes.appendChild(h1);
+    });
 
-            let h1 = document.createElement('h1');
-            h1.className = `col-start-${type.slot} px-2 bg-slate-300 border-4 border-slate-400 rounded-xl`;
-            h1.innerText = type.type.name.toUpperCase();
-            console.log(h1);
-            
-            pkmnDataTypes.appendChild(h1);
-        });
-        
-    }
-
-    TypeList();
+    pkmnDataCry.src = pkmnData.cries.latest;
 
     pkmnDataIcon.src = pkmnData.sprites.other["official-artwork"].front_default;
     pkmnDataIcon.alt = capitalize(pkmnData.name)+"OfficialArtwork";
+
+    pkmnDataAnimatedIcon.src = pkmnData.sprites.other.showdown.front_default;
+    pkmnDataIcon.alt = capitalize(pkmnData.name)+"ShowdownIcon";
     
     //Spawn Data
     locationData = await getExtraData(pkmnData.location_area_encounters);
@@ -89,14 +113,24 @@ async function SearchPokemon(pkmnSearch)
 
     //Pokedex Entry 
     for (let i = 0; i < speciesData.flavor_text_entries.length; i++)
-        {
+    {
         //Here we look for the English entry of the pokemon from Pokemon X. We break in order to generate only 1 dex entry.
         if (speciesData.flavor_text_entries[i].language.name === "en" && speciesData.flavor_text_entries[i].version.name === "x")
         {
             console.log("Dex Entry:\n",speciesData.flavor_text_entries[i].flavor_text);
+            pkmnDexEntry.innerText = speciesData.flavor_text_entries[i].flavor_text;
             break;
         }
         
+    }
+
+    for (let i = 0; i < speciesData.genera.length; i++)
+    {
+        if (speciesData.genera[i].language.name == "en")
+        {
+            pkmnSpecies.innerText = speciesData.genera[i].genus
+            break;
+        }
     }
 
     //Searching for Evo Data
@@ -125,14 +159,13 @@ SearchPokemon(pkmnName);
 //Event listener for searching basaed on input
 searchBtn.addEventListener('click', function()
 {
-    //WORKING ON IT!
-    return null;
+    SearchPokemon(searchText.value.toLowerCase());
 })
 
 //Event listener for pokemon cries
 cryBtn.addEventListener('click', function()
 {
-    pkmnDataCry.src = pkmnData.cries.latest;
+   
     
     //#1 3DS Pikachu Cry Hater. Thank goodness they changed it in Legends and Scarlet/Violet.
     if (pkmnData.id == 25)
@@ -143,3 +176,40 @@ cryBtn.addEventListener('click', function()
     pkmnDataCry.volume = 0.2;
     pkmnDataCry.play();
 })
+
+//Event listener for toggling shiny icons
+shinyBtn.addEventListener('click', function()
+{
+    shinyToggle = !shinyToggle;
+    if (shinyToggle)
+    {
+        pkmnDataIcon.src = pkmnData.sprites.other["official-artwork"].front_shiny;
+        pkmnDataAnimatedIcon.src = pkmnData.sprites.other.showdown.front_shiny;
+    } else {
+        pkmnDataIcon.src = pkmnData.sprites.other["official-artwork"].front_default;
+        pkmnDataAnimatedIcon.src = pkmnData.sprites.other.showdown.front_default;
+    }
+})
+
+btnGeneral.addEventListener('click',function()
+{
+    pkmnDataGeneral.style = "display: block";
+    pkmnDataEvolution.style = "display: none";
+    pkmnDataGame.style = "display: none";
+})
+
+btnEvolution.addEventListener('click',function()
+{
+    pkmnDataGeneral.style = "display: none";
+    pkmnDataEvolution.style = "display: block";
+    pkmnDataGame.style = "display: none";
+})
+
+btnGameData.addEventListener('click',function()
+{
+    pkmnDataGeneral.style = "display: none";
+    pkmnDataEvolution.style = "display: none";
+    pkmnDataGame.style = "display: block";
+})
+
+

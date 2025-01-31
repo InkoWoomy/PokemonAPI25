@@ -56,9 +56,21 @@ function capitalize(s)
 //Test Data gather
 async function SearchPokemon(pkmnSearch)
 {
+    let prevData = pkmnData 
+    
     //Basic Pokemon Data
     pkmnData = await getDataGeneral(pkmnSearch);
     console.log("Pokemon Data:\n", pkmnData);
+    
+    //Check to see if the pokemon is outside the asking range (cannot be a pokemon gen VI or higher)
+    console.log("DexNo.", pkmnData.id);
+    if (pkmnData.id > 649)
+    {
+        console.log("This Pokemon is invalid!");
+        pkmnData = prevData;
+        return null;
+    }
+    pkmnDataDexNo.innerText = "National Dex No. " + pkmnData.id;
 
     console.log("Name:", capitalize(pkmnData.name));
     let pkmnNameReturn = "";
@@ -72,8 +84,6 @@ async function SearchPokemon(pkmnSearch)
     }
     pkmnDataName.innerText = capitalize(pkmnNameReturn);
 
-    console.log("DexNo.", pkmnData.id);
-    pkmnDataDexNo.innerText = "National Dex No. " + pkmnData.id;
 
     console.log("Height:", (pkmnData.height/10).toFixed(1),"m");
     pkmnHeight.innerText = "Height: "+ (pkmnData.height/10).toFixed(1)+" m";

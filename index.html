@@ -11,25 +11,26 @@
     
     <!--Navbar-->
     <section class="relative">
-        <nav class="grid grid-cols-7 w-full  left-0 bg-slate-600 max-w-screen items-center justify-between rounded-b-3xl mt-0 p-4">
-            <h1 class="col-start-1 col-span-2 text-white text-9xl">- Unova National Pokedex</h1>
+        <nav class="grid md:grid-cols-6 sm:grid-cols-5 w-full  left-0 bg-slate-600 max-w-screen items-center justify-between rounded-b-3xl mt-0 p-4">
+            <h1 class="col-start-1 lg:col-span-2 text-white text-9xl">- Unova National Pokedex</h1>
             
-            <div class="col-start-4 col-span-2">
-                <input type="text" id="searchText" placeholder="Search" class="text-gray-900 border-8 border-gray-300 rounded-3xl bg-gray-50 text-base focus:ring-blue-300 focus:border-blue-300">
+            <div class="lg:col-start-3 sm:col-start-2 col-span-2">
+                <input type="text" id="searchText" placeholder="Search" class="px-5 w-full text-gray-900 border-4 border-gray-300 rounded-3xl bg-gray-50 text-base focus:ring-blue-300 focus:border-blue-300">
+                <div class="grid grid-cols-3" id="favList"></div>
             </div>
             
-            <div class="">
-                <button type="button" id="searchBtn" class="bg-blue-300 border-blue-400 hover:bg-blue-500 hover:border-blue-600 focus:ring-4 border-4 focus:ring-blue-300 rounded-3xl">Search</button>                    
+            <div class="sm:col-span-2 lg:col-span-1">
+                <button type="button" id="searchBtn" class="w-full mx-3 bg-blue-300 border-blue-400 hover:bg-blue-500 hover:border-blue-600 focus:ring-4 border-4 focus:ring-blue-300 rounded-3xl">Search</button>                    
             </div>
-            <div class="grid grid-cols-2">
-                <div class="">
-                    <button type="button" class="bg-blue-300 border-blue-400 hover:bg-blue-500 hover:border-blue-600 focus:ring-4 border-4 focus:ring-blue-300 rounded-3xl">
-                        <img src="./assets/img/StarOff.png" alt="Favorites Button" class="m-4 object-fill">
+            <div class="grid grid-cols-2 sm:col-span-3 sm:col-start-6">
+                <div class="justify-self-center">
+                    <button type="button" id="favBtn" class="bg-blue-300 border-blue-400 hover:bg-blue-500 hover:border-blue-600 border-4 focus:ring-blue-300 rounded-3xl">
+                        <img src="./assets/img/StarOff.png" alt="Favorites Button" class="m-3 object-fill">
                     </button>                    
                 </div>
-                <div class="">
-                    <button type="button" class="bg-blue-300 border-blue-400 hover:bg-blue-500 hover:border-blue-600 focus:ring-4 border-4 focus:ring-blue-300 rounded-3xl">
-                        <img src="./assets/img/Shuffle.png" alt="Shuffle" class="m-4 object-fill">
+                <div class="sm:justify-self-center lg:justify-self-start">
+                    <button type="button" id="shuffleBtn" class="bg-blue-300 border-blue-400 hover:bg-blue-500 hover:border-blue-600 border-4 focus:ring-blue-300 rounded-3xl">
+                        <img src="./assets/img/Shuffle.png" alt="Shuffle" class="m-3 object-fill">
                     </button>                    
                 </div>
             </div>
@@ -58,7 +59,7 @@
                     
                 </div>
                 
-                <div class="grid grid-cols-4 pt-5">
+                <div class="grid lg:grid-cols-4 sm:grid-cols-2 pt-5">
                     <div class="col-start-1 pe-1">
                         <button type="button" id="cryBtn" class="bg-blue-300 border-blue-400 hover:bg-blue-500 hover:border-blue-600 border-4 rounded-3xl w-full">Cries</button> 
                     </div>
@@ -74,13 +75,13 @@
             <!--Button Group + Data-->
             <div class="px-4 lg:pt-0 pt-10">
                 <div class="inline-flex w-full shadow-xs" role="group">
-                    <button type="button" id="btnGeneral" class="px-4 text-gray-900 border-4 border-slate-400 rounded-s-3xl hover:bg-blue-500 hover:text-white focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 bg-white w-full">
+                    <button type="button" id="btnGeneral" class="px-4 text-gray-900 border-4 border-slate-400 rounded-s-3xl hover:bg-blue-500 hover:text-white focus:z-10 focus:bg-blue-400 bg-white w-full">
                     General
                     </button>
-                    <button type="button" id="btnEvolution" class="px-4 text-gray-900 border-t-4 border-b-4 border-slate-400 hover:bg-blue-500 hover:text-white focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 bg-white w-full">
+                    <button type="button" id="btnEvolution" class="px-4 text-gray-900 border-t-4 border-b-4 border-slate-400 hover:bg-blue-500 hover:text-white focus:z-10 focus:bg-blue-400 bg-white w-full">
                     Evolution
                     </button>
-                    <button type="button" id="btnGameData" class="px-4 text-gray-900 border-4 border-slate-400 rounded-e-3xl hover:bg-blue-500 hover:text-white focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 bg-white w-full">
+                    <button type="button" id="btnGameData" class="px-4 text-gray-900 border-4 border-slate-400 rounded-e-3xl hover:bg-blue-500 hover:text-white focus:z-10 focus:bg-blue-400 bg-white w-full">
                     Game Data
                     </button>
                 </div>
@@ -106,14 +107,51 @@
                     </div>
                 </section>
 
-                <!--Evolution Data-->
-                <section id="pkmnDataEvolution">
 
+
+
+                <!--Evolution Data-->
+                <section id="pkmnDataEvolution" style="display: none">
+                    <div id="evoList" class="grid my-4">
+                        <div id="basicPkmn" class="grid-cols-1">
+                            
+                        </div>
+                        <div id="stage1Pkmn" class="grid-cols-2 overflow-y-scroll">
+                            
+                        </div>
+                        <div id="stage2Pkmn" class="grid-cols-3 overflow-y-scroll">
+                            
+                        </div>
+                    </div>
                 </section>
 
-                <!--Game Data-->
-                <section id="pkmnDataGame">
 
+
+
+                <!--Game Data-->
+                <section id="pkmnDataGame" style="display: none">
+                    <div class="grid grid-cols-2 h-auto">
+                        <div class="col-span-2 my-2">
+                            <h1 class="px-2 bg-slate-600 rounded-t-2xl text-white" id="pkmnDataAbilitiesTitle"></h1>
+                            <div class="h-fit rounded-2xl">
+                                <div id="pkmnDataAbilities"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-start-1 my-2 pe-1">
+                            <h1 class="px-2 bg-slate-600 rounded-t-2xl text-white" id="pkmnDataMovesTitle"></h1>
+                            <div class="overflow-y-scroll h-72 rounded-bl-2xl">
+                                <div id="pkmnDataMoves"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-start-2 my-2 ps-1">
+                            <h1 class="px-2 bg-slate-600 rounded-t-2xl text-white" id="pkmnDataLocationTitle"></h1>
+                            <div class="overflow-y-scroll h-72 rounded-bl-2xl">
+                                <div id="pkmnDataLocations"></div>
+                            </div>
+                        </div>
+                    </div>
                 </section>
 
             </div>
@@ -123,6 +161,6 @@
 
     
     <audio src="" id="pkmnDataCry" alt=""></audio>
-    <script src="./scripts/app.js"></script>
+    <script type="module" src="./scripts/app.js"></script>
 </body>
 </html>

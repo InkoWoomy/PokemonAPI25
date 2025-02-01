@@ -37,8 +37,7 @@ const stage2Pkmn = document.getElementById("stage2Pkmn");
 
 
 //Declarations
-// let pkmnName = Math.ceil(Math.random() * 649);
-let pkmnName = Math.ceil(133);
+let pkmnName = Math.ceil(Math.random() * 649);
 let pkmnData = [];
 let speciesData = [];
 let evolutionData = [];

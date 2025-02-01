@@ -44,8 +44,7 @@ let evolutionData = [];
 let basicPokemon = [];
 let movesData = [];
 let abilitiesData = [];
-let locationData = [];
-let evoPathData = [];
+let locationData = []; 
 let shinyToggle = false;
 
 

@@ -244,8 +244,6 @@ async function SearchPokemon(pkmnSearch)
             pkmnDataLocations.appendChild(h1);
         });
     }
-
-    evoPathData = [];
     let basicEvoData = [];
     let stage1Data = [];
     let stage2Data = [];

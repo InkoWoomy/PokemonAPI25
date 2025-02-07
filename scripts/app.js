@@ -311,7 +311,7 @@ async function SearchPokemon(pkmnSearch)
             
             
             basicEvoData.map(async index => {
-                console.log("MAPP");
+                console.log("MAPPING BASIC");
                 let imageSource = await getExtraData(`https://pokeapi.co/api/v2/pokemon/${index.name}/`);
                 let img = document.createElement("img");
                 console.log("IMG\n",imageSource);
@@ -325,7 +325,7 @@ async function SearchPokemon(pkmnSearch)
             });
 
             stage1Data.map(async index => {
-                console.log("MAPP");
+                console.log("MAPPING STAGE 1");
                 let imageSource = await getExtraData(`https://pokeapi.co/api/v2/pokemon/${index.name}/`);
                 let img = document.createElement("img");
                 console.log("IMG\n",imageSource);
@@ -339,7 +339,7 @@ async function SearchPokemon(pkmnSearch)
             });
 
             stage2Data.map(async index => {
-                console.log("MAPP");
+                console.log("MAPPING STAGE 2");
                 let imageSource = await getExtraData(`https://pokeapi.co/api/v2/pokemon/${index.name}/`);
                 let img = document.createElement("img");
                 console.log("IMG\n",imageSource);
@@ -371,8 +371,6 @@ searchBtn.addEventListener('click', function()
 //Event listener for pokemon cries
 cryBtn.addEventListener('click', function()
 {
-   
-    
     //#1 3DS Pikachu Cry Hater. Thank goodness they changed it in Legends and Scarlet/Violet.
     if (pkmnData.id == 25)
         {
